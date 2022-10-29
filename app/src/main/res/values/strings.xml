@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">do_an</string>
+    <string name="app_name">DoAnDD</string>
+    <string name="home">Food Store</string>
+    <string name="account">Thông tin cá nhân</string>
 </resources>
