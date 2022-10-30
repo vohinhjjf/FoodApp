@@ -69,6 +69,82 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnTaikhoan" />
 
+    <Button
+        android:id="@+id/btnMode"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="#00FFFFFF"
+        android:drawableStart="@drawable/ic_mode"
+        android:drawableEnd="@drawable/ic_next"
+        android:drawablePadding="15dp"
+        android:drawableTint="#9802AF"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp"
+        android:text="Chế độ"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCaidat" />
+
+    <Button
+        android:id="@+id/btnNotification"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="#00FFFFFF"
+        android:drawableStart="@drawable/ic_notifications"
+        android:drawableEnd="@drawable/ic_next"
+        android:drawablePadding="15dp"
+        android:drawableTint="#03A9F4"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp"
+        android:text="Thông báo"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMode" />
+
+    <Button
+        android:id="@+id/btnSupport"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="#00FFFFFF"
+        android:drawableStart="@drawable/ic_support"
+        android:drawableEnd="@drawable/ic_next"
+        android:drawablePadding="15dp"
+        android:drawableTint="#03D420"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp"
+        android:text="Góp ý"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnNotification" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="#00FFFFFF"
+        android:drawableStart="@drawable/ic_logout"
+        android:drawableEnd="@drawable/ic_next"
+        android:drawablePadding="15dp"
+        android:drawableTint="#FF0000"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp"
+        android:text="Đăng xuất"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSupport" />
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

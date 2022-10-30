@@ -14,7 +14,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/home"
-            android:icon="@drawable/ic_food"
+            android:icon="@drawable/food"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
