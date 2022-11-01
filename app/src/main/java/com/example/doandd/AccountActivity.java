@@ -20,21 +20,23 @@ public class AccountActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.account);
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch(id){
-                    //check id
-                    case R.id.home: {
-                        Intent intent = new Intent(AccountActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(0, 0);
-                    }
-                    case R.id.account: {}
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            switch(id){
+                //check id
+                case R.id.home: {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                    break;
                 }
-                return true;
+                case R.id.voucher:{
+                    Intent intent = new Intent(this, VoucherActivity.class);
+                    startActivity(intent);
+                    break;
+                }
+                case R.id.account: {}
             }
+            return true;
         });
     }
 }

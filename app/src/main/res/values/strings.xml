@@ -2,4 +2,12 @@
     <string name="app_name">DoAnDD</string>
     <string name="home">Food Store</string>
     <string name="account">Thông tin cá nhân</string>
+    <style name="grayText">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/gray</item>
+    </style>
+    <style name="blueText">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/blue</item>
+    </style>
 </resources>

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".login.LoginActivity"
             android:label="@string/home"
             android:icon="@drawable/food"
             android:exported="true">
@@ -22,6 +22,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".login.SignUpActivity"
+            android:label="SignUp"/>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/home">
+        </activity>
+        <activity
+            android:name=".VoucherActivity"
+            android:label="Voucher"/>
         <activity
             android:name=".AccountActivity"
             android:label="@string/account"/>

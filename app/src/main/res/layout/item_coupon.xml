@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/coupon_view"
+        android:layout_width="260dp"
+        android:layout_height="100dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/bg_coupon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btnCoupon"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:text="Title"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="8pt" />
+
+        <TextView
+            android:id="@+id/tv_hsd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/item_title"
+            android:text="HSD: "
+            android:textColor="@color/black"
+            android:textSize="8pt" />
+
+        <TextView
+            android:id="@+id/item_hsd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_title"
+            android:layout_marginTop="15dp"
+            android:layout_toEndOf="@+id/tv_hsd"
+            android:text="asd"
+            android:textColor="@color/gray"
+            android:textSize="8pt" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/divide2"
+        android:layout_width="20dp"
+        android:layout_height="100dp"
+        android:background="@drawable/bg_coupon"
+        android:backgroundTint="@color/blue"
+        app:layout_constraintLeft_toLeftOf="@id/coupon_view"
+        app:layout_constraintTop_toTopOf="@id/coupon_view" />
+    <View
+        android:id="@+id/divide"
+        android:layout_width="2dp"
+        android:layout_height="70dp"
+        android:layout_marginVertical="15dp"
+        android:background="@drawable/divide"
+        app:layout_constraintLeft_toRightOf="@id/coupon_view"
+        app:layout_constraintTop_toTopOf="@id/coupon_view"/>
+    <Button
+        android:id="@+id/btnCoupon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/bg_coupon_2"
+        android:text="Chọn"
+        android:textColor="@color/blue"
+        app:layout_constraintLeft_toRightOf="@id/divide"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

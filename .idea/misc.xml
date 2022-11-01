@@ -4,24 +4,37 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/DoAnDD/app/src/main/res/drawable-v24/styles.xml" value="0.177" />
+        <entry key="..\:/DoAnDD/app/src/main/res/drawable/bg_coupon.xml" value="0.107" />
+        <entry key="..\:/DoAnDD/app/src/main/res/drawable/bg_coupon_2.xml" value="0.12" />
+        <entry key="..\:/DoAnDD/app/src/main/res/drawable/divide.xml" value="0.155" />
         <entry key="..\:/DoAnDD/app/src/main/res/drawable/ic_best_seller.xml" value="0.1355" />
         <entry key="..\:/DoAnDD/app/src/main/res/drawable/ic_cart.xml" value="0.177" />
+        <entry key="..\:/DoAnDD/app/src/main/res/drawable/ic_email.xml" value="0.1355" />
         <entry key="..\:/DoAnDD/app/src/main/res/drawable/ic_food.xml" value="0.1355" />
+        <entry key="..\:/DoAnDD/app/src/main/res/drawable/ic_history.xml" value="0.139" />
         <entry key="..\:/DoAnDD/app/src/main/res/drawable/ic_home.xml" value="0.177" />
+        <entry key="..\:/DoAnDD/app/src/main/res/drawable/ic_location.xml" value="0.139" />
+        <entry key="..\:/DoAnDD/app/src/main/res/drawable/ic_lock.xml" value="0.1355" />
         <entry key="..\:/DoAnDD/app/src/main/res/drawable/ic_logout.xml" value="0.1355" />
         <entry key="..\:/DoAnDD/app/src/main/res/drawable/ic_mode.xml" value="0.1355" />
         <entry key="..\:/DoAnDD/app/src/main/res/drawable/ic_notifications.xml" value="0.1355" />
         <entry key="..\:/DoAnDD/app/src/main/res/drawable/ic_person.xml" value="0.177" />
         <entry key="..\:/DoAnDD/app/src/main/res/drawable/ic_support.xml" value="0.1355" />
+        <entry key="..\:/DoAnDD/app/src/main/res/drawable/ic_ticket.xml" value="0.107" />
         <entry key="..\:/DoAnDD/app/src/main/res/drawable/round_bg.xml" value="0.177" />
         <entry key="..\:/DoAnDD/app/src/main/res/drawable/round_border.xml" value="0.177" />
         <entry key="..\:/DoAnDD/app/src/main/res/drawable/round_button.xml" value="0.1355" />
         <entry key="..\:/DoAnDD/app/src/main/res/drawable/round_grey.xml" value="0.1355" />
+        <entry key="..\:/DoAnDD/app/src/main/res/drawable/rounded_coupon.xml" value="0.139" />
         <entry key="..\:/DoAnDD/app/src/main/res/font/font.xml" value="0.2833333333333333" />
         <entry key="..\:/DoAnDD/app/src/main/res/layout/activity_account.xml" value="0.253125" />
+        <entry key="..\:/DoAnDD/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/DoAnDD/app/src/main/res/layout/activity_main.xml" value="0.24010416666666667" />
+        <entry key="..\:/DoAnDD/app/src/main/res/layout/activity_sign_up.xml" value="0.2" />
+        <entry key="..\:/DoAnDD/app/src/main/res/layout/activity_voucher.xml" value="0.253125" />
         <entry key="..\:/DoAnDD/app/src/main/res/layout/item_best_hot_food.xml" value="0.253125" />
         <entry key="..\:/DoAnDD/app/src/main/res/layout/item_best_seller_food.xml" value="0.25416666666666665" />
+        <entry key="..\:/DoAnDD/app/src/main/res/layout/item_coupon.xml" value="0.203125" />
         <entry key="..\:/DoAnDD/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/DoAnDD/app/src/main/res/menu/bottom_navigation_menu_home.xml" value="0.25416666666666665" />
         <entry key="..\:/DoAnDD/app/src/main/res/menu/menu.xml" value="0.25416666666666665" />

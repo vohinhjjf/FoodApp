@@ -1,5 +1,6 @@
 package com.example.doandd.adapter;
 
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class best_seller_food_adapter extends RecyclerView.Adapter<best_seller_f
         }
         holder.name.setText(bestSellerFood.getName());
         holder.description.setText(bestSellerFood.getDescription());
+        holder.description.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         holder.img.setImageResource(bestSellerFood.getImage());
     }
     @Override
@@ -47,7 +49,7 @@ public class best_seller_food_adapter extends RecyclerView.Adapter<best_seller_f
         public best_seller_food_View_Holder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name_best_seller_food);
-            description = itemView.findViewById(R.id.description_best_seller_food);
+            description = itemView.findViewById(R.id.price_best_seller_food);
             img = itemView.findViewById(R.id.img);
         }
     }

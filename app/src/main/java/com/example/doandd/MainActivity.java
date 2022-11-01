@@ -84,10 +84,15 @@ public class MainActivity extends AppCompatActivity {
             switch(id){
                 //check id
                 case R.id.home: {}
-                case R.id.account: {
-                    Intent intent = new Intent(MainActivity.this, AccountActivity.class);
+                case R.id.voucher:{
+                    Intent intent = new Intent(this, VoucherActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(0, 0);
+                    break;
+                }
+                case R.id.account: {
+                    Intent intent = new Intent(this, AccountActivity.class);
+                    startActivity(intent);
+                    break;
                 }
             }
             return true;
