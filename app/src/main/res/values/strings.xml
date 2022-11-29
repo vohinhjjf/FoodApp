@@ -2,6 +2,8 @@
     <string name="app_name">DoAnDD</string>
     <string name="home">Food Store</string>
     <string name="account">Thông tin cá nhân</string>
+    <string name="new_user_register_now">Register Now</string>
+
     <style name="grayText">
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/gray</item>

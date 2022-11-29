@@ -2,14 +2,15 @@ package com.example.doandd;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Button;
 
 import com.example.doandd.adapter.best_seller_food_adapter;
 import com.example.doandd.adapter.hot_food_adapter;
@@ -20,13 +21,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    Button btnCart;
+    Toolbar toolbar;
+    RecyclerView recyclerView_hotfoods, recyclerView_bestseller_foods;
+    BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        RecyclerView recyclerView_bestseller_foods = findViewById(R.id.rcv_bestseller_foods);
+        toolbar = findViewById(R.id.toolbar);
+        recyclerView_hotfoods = findViewById(R.id.rcv_hotfoods);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        recyclerView_bestseller_foods = findViewById(R.id.rcv_bestseller_foods);
+
         recyclerView_bestseller_foods.setLayoutManager(new GridLayoutManager(this, 2));
         List<best_seller_food> list_best_seller_food = new ArrayList<>();
 
@@ -49,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
         best_seller_food_adapter bestseller_food_adapter = new best_seller_food_adapter(list_best_seller_food);
 
-        RecyclerView recyclerView_hotfoods = findViewById(R.id.rcv_hotfoods);
         recyclerView_hotfoods.setLayoutManager(new GridLayoutManager(this, 2));
         List<hot_food> list_hot_food = new ArrayList<>();
 
@@ -76,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView_bestseller_foods.setAdapter(bestseller_food_adapter);
         recyclerView_hotfoods.setAdapter(hot_food_adapter);
 
+
         setSupportActionBar(toolbar);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.home);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -103,5 +109,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.cart:
+                startActivity(new Intent(this, CartActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

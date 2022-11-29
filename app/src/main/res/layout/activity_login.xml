@@ -14,7 +14,7 @@
         android:fontFamily="@font/font"
         android:text="Food Store"
         android:textColor="@color/blue"
-        android:textSize="42dp"
+        android:textSize="52dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/round_button"
         android:drawableStart="@drawable/ic_email"
         android:drawablePadding="16dp"
@@ -90,7 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/styles"
         android:text="LOGIN"
         android:textColor="@android:color/background_light"
@@ -121,15 +121,16 @@
         android:id="@+id/btnSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="32dp"
         android:layout_weight="1"
-        android:layout_marginTop="16dp"
-        android:background="@color/cardview_light_background"
-        android:text="New User ? Register Now"
+        android:background="#00F8F5F5"
+        android:text="@string/new_user_register_now"
         android:textColor="#0B9A9A"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -142,6 +143,17 @@
         app:layout_constraintStart_toStartOf="@+id/editPassword"
         app:layout_constraintTop_toTopOf="@+id/editPassword"
         tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="10dp"
+        android:text="NEW USER?"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnSignUp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:adjustViewBounds="true"
-        android:src="@mipmap/img_com_son" />
+        android:src="@drawable/pho_bo" />
     <TextView
         android:id="@+id/name_hot_food"
         android:text="name"
