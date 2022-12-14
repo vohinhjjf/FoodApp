@@ -120,7 +120,17 @@
                         android:background="@drawable/round_button"
                         android:drawableTop="@mipmap/ic_food"
                         android:paddingHorizontal="10dp"
-                        android:text="Đồ ăn"
+                        android:text="Cơm"
+                        android:textColor="@color/black" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:background="@drawable/round_button"
+                        android:drawableTop="@mipmap/ic_chay"
+                        android:paddingHorizontal="10dp"
+                        android:text="Bún/Phở"
                         android:textColor="@color/black" />
 
                     <Button
@@ -137,21 +147,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
                         android:background="@drawable/round_button"
                         android:drawableTop="@mipmap/ic_cake"
                         android:paddingHorizontal="10dp"
                         android:text="Bánh"
-                        android:textColor="@color/black" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:background="@drawable/round_button"
-                        android:drawableTop="@mipmap/ic_chay"
-                        android:paddingHorizontal="10dp"
-                        android:text="Đồ chay"
                         android:textColor="@color/black" />
                 </LinearLayout>
             </HorizontalScrollView>
@@ -181,12 +181,32 @@
                     android:textStyle="bold"
                     app:drawableStartCompat="@drawable/ic_best_seller" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:paddingVertical="20dp"
-                    android:id="@+id/rcv_bestseller_foods"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"/>
+                    android:paddingVertical="20dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcv_bestseller_foods"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/blue"
+                        android:progressTint="#2196F3"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
                     android:id="@+id/divider2"
@@ -205,13 +225,33 @@
                     android:textColor="@color/orange"
                     android:textStyle="bold"/>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:paddingTop="20dp"
-                    android:paddingBottom="100dp"
-                    android:id="@+id/rcv_hotfoods"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginStart="15dp"/>
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="20dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:paddingBottom="100dp"
+                        android:id="@+id/rcv_hotfoods"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginStart="15dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <ProgressBar
+                        android:id="@+id/progressBar1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/blue"
+                        android:progressTint="#2196F3"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
             </LinearLayout>
@@ -219,7 +259,6 @@
 
         </LinearLayout>
     </ScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

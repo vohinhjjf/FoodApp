@@ -1,12 +1,8 @@
 package com.example.doandd;
 
-import static com.google.common.collect.ComparisonChain.start;
-
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -14,19 +10,15 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.doandd.adapter.CouponAdapter;
+import com.example.doandd.adapter.VoucherAdapter;
 import com.example.doandd.database.FirestoreDatabase;
-import com.example.doandd.login.LoginActivity;
-import com.example.doandd.model.CouponModel;
-import com.example.doandd.model.best_seller_food;
+import com.example.doandd.model.VoucherModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -36,8 +28,7 @@ import java.util.List;
 public class VoucherActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private ProgressBar progressBar;
-    List<CouponModel> list_coupon_km = new ArrayList<>();
-    List<CouponModel> list_coupon_cn = new ArrayList<>();
+    List<VoucherModel> list_coupon_km = new ArrayList<>();
     FirestoreDatabase fb = new FirestoreDatabase();
 
     @Override
@@ -53,7 +44,8 @@ public class VoucherActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        list_coupon_km.add(new CouponModel(
+                        list_coupon_km.add(new VoucherModel(
+                                document.getId(),
                                 document.getBoolean("active"),
                                 document.getString("title"),
                                 document.getDouble("discount"),
@@ -62,8 +54,8 @@ public class VoucherActivity extends AppCompatActivity {
                         ));
                     }
                     progressBar.setVisibility(View.INVISIBLE);
-                    CouponAdapter couponAdapterKm = new CouponAdapter(list_coupon_km);
-                    recyclerView_coupon_km.setAdapter(couponAdapterKm);
+                    VoucherAdapter voucherAdapterKm = new VoucherAdapter(list_coupon_km, true);
+                    recyclerView_coupon_km.setAdapter(voucherAdapterKm);
                 }
                 else {
                     //Log.w( "Error getting documents.", task.getException());
@@ -72,8 +64,6 @@ public class VoucherActivity extends AppCompatActivity {
         });
         recyclerView_coupon_km.setLayoutManager(
                 new LinearLayoutManager(this));
-        CouponAdapter couponAdapterCn = new CouponAdapter(list_coupon_cn);
-        recyclerView_coupon_ca_nhan.setAdapter(couponAdapterCn);
         recyclerView_coupon_ca_nhan.setLayoutManager(
                 new LinearLayoutManager(this));
         //
@@ -85,6 +75,7 @@ public class VoucherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                List<VoucherModel> list = new ArrayList<>();
                 btnCaNhan.setBackgroundResource(R.drawable.rounded_coupon);
                 btnCaNhan.setTextAppearance(R.style.blueText);
                 recyclerView_coupon_ca_nhan.setVisibility(View.VISIBLE);
@@ -93,6 +84,30 @@ public class VoucherActivity extends AppCompatActivity {
                 btnKhuyenMai.setBackgroundResource(R.color.white);
                 btnKhuyenMai.setTextAppearance(R.style.grayText);
                 recyclerView_coupon_km.setVisibility(View.INVISIBLE);
+                fb.user.document(fb.mAuth.getCurrentUser().getUid()).collection("voucher").get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            fb.voucher.document(document.getId()).get().addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    list.add(new VoucherModel(
+                                            document.getId(),
+                                            task1.getResult().getBoolean("active"),
+                                            task1.getResult().getString("title"),
+                                            task1.getResult().getDouble("discount"),
+                                            task1.getResult().getDouble("condition"),
+                                            task1.getResult().getString("datetime")
+                                    ));
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                    VoucherAdapter voucherAdapterCn = new VoucherAdapter(list, false);
+                                    recyclerView_coupon_ca_nhan.setAdapter(voucherAdapterCn);
+                                }
+                            });
+                        }
+                    }
+                    else {
+                        //Log.w( "Error getting documents.", task.getException());
+                    }
+                });
             }
         });
 
@@ -102,7 +117,7 @@ public class VoucherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                List<CouponModel> list = new ArrayList<>();
+                List<VoucherModel> list = new ArrayList<>();
                 btnKhuyenMai.setBackgroundResource(R.drawable.rounded_coupon);
                 btnKhuyenMai.setTextAppearance(R.style.blueText);
                 recyclerView_coupon_km.setVisibility(View.VISIBLE);
@@ -117,7 +132,8 @@ public class VoucherActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                list.add(new CouponModel(
+                                list.add(new VoucherModel(
+                                        document.getId(),
                                         document.getBoolean("active"),
                                         document.getString("title"),
                                         document.getDouble("discount"),
@@ -126,8 +142,8 @@ public class VoucherActivity extends AppCompatActivity {
                                 ));
                             }
                             progressBar.setVisibility(View.INVISIBLE);
-                            CouponAdapter couponAdapterKm = new CouponAdapter(list);
-                            recyclerView_coupon_km.setAdapter(couponAdapterKm);
+                            VoucherAdapter voucherAdapterKm = new VoucherAdapter(list, true);
+                            recyclerView_coupon_km.setAdapter(voucherAdapterKm);
                         }
                         else {
                             //Log.w( "Error getting documents.", task.getException());

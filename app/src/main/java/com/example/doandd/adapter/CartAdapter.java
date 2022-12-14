@@ -1,12 +1,13 @@
 package com.example.doandd.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +15,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doandd.R;
@@ -21,6 +24,7 @@ import com.example.doandd.model.CartModel;
 import com.example.doandd.utils.Format;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder>{
     private Activity context;
@@ -36,6 +40,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart,parent,false);
         return new CartViewHolder(view);
     }
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.CartViewHolder holder, int position) {
         CartModel cartModel= list_cart.get(position);
@@ -43,6 +48,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             return;
         }
         double discountPrice = cartModel.getPrice()*(100 -cartModel.getDiscountPercentage())/100;
+        AtomicInteger amount = new AtomicInteger(cartModel.getAmount());
+
         holder.name.setText(cartModel.getName());
         holder.price.setText(new Format().currency(cartModel.getPrice())+"đ");
         holder.price.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -50,7 +57,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.discountPercent.setText(cartModel.getDiscountPercentage() +"%");
         holder.rate.setRating(Float.parseFloat(String.valueOf(cartModel.getRate())));
         holder.checkbuy.setChecked(cartModel.getCheckbuy());
-        holder.amount.setText(String.valueOf((cartModel.getAmount())));
         holder.imageView.setImageResource(cartModel.getImage());
         holder.cartView.setOnClickListener(view -> {
             if(!holder.checkbuy.isChecked()){
@@ -58,10 +64,25 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             }else {
                 total = total - discountPrice;
             }
-
             holder.checkbuy.setChecked(!holder.checkbuy.isChecked());
-            System.out.println("Total: "+ total);
         });
+        holder.btnMinus.setOnClickListener(view -> {
+            if (amount.get()!=1){
+                amount.getAndDecrement();
+                holder.amount.setText(String.valueOf((amount.get())));
+            }
+            if (amount.get()==1){
+                holder.btnMinus.setForeground(ContextCompat.getDrawable(context, R.drawable.ic_delete));
+            }else {
+                holder.btnMinus.setForeground(ContextCompat.getDrawable(context, R.drawable.ic_minus));
+            }
+        });
+        holder.btnPlus.setOnClickListener(view -> {
+            amount.getAndIncrement();
+            holder.amount.setText(String.valueOf((amount.get())));
+            holder.btnMinus.setForeground(ContextCompat.getDrawable(context, R.drawable.ic_minus));
+        });
+        holder.amount.setText(String.valueOf((amount.get())));
     }
     @Override
     public int getItemCount() {
@@ -73,6 +94,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         private final CheckBox checkbuy;
         private final ImageView imageView;
         private final LinearLayout cartView;
+        private final Button btnMinus, btnPlus;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,6 +107,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             checkbuy = itemView.findViewById(R.id.checkBuy);
             amount = itemView.findViewById(R.id.tvAmount);
             cartView = itemView.findViewById(R.id.cart_view);
+            btnMinus = itemView.findViewById(R.id.btnMinus);
+            btnPlus = itemView.findViewById(R.id.btnPlus);
         }
     }
 }

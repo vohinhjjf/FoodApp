@@ -2,6 +2,7 @@ package com.example.doandd;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -41,6 +42,11 @@ public class CartActivity extends AppCompatActivity {
         //Back
         btnBack.setOnClickListener(view ->{
             Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        });
+        //Thanh toan
+        btnThanhToan.setOnClickListener(view ->{
+            Intent intent = new Intent(this, PaymentActivity.class);
             startActivity(intent);
         });
     }

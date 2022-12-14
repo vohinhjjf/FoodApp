@@ -111,6 +111,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/btnMinus"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/bg_select_1"
@@ -128,6 +129,7 @@
                     android:textColor="@color/black"/>
 
                 <Button
+                    android:id="@+id/btnPlus"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/bg_select_2"

@@ -1,5 +1,6 @@
 package com.example.doandd;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -8,82 +9,104 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.view.View;
+import android.widget.ProgressBar;
 
-import com.example.doandd.adapter.best_seller_food_adapter;
-import com.example.doandd.adapter.hot_food_adapter;
-import com.example.doandd.model.best_seller_food;
-import com.example.doandd.model.hot_food;
+import com.example.doandd.adapter.FoodAdapter;
+import com.example.doandd.database.FirestoreDatabase;
+import com.example.doandd.model.FoodModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnCart;
+    ProgressBar progressBar, progressBar1;
     Toolbar toolbar;
     RecyclerView recyclerView_hotfoods, recyclerView_bestseller_foods;
     BottomNavigationView bottomNavigationView;
+
+
+    List<FoodModel> list_best_seller_food = new ArrayList<>();
+    List<FoodModel> list_hot_food = new ArrayList<>();
+    FirestoreDatabase fb = new FirestoreDatabase();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar1 = findViewById(R.id.progressBar1);
         recyclerView_hotfoods = findViewById(R.id.rcv_hotfoods);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         recyclerView_bestseller_foods = findViewById(R.id.rcv_bestseller_foods);
 
-        recyclerView_bestseller_foods.setLayoutManager(new GridLayoutManager(this, 2));
-        List<best_seller_food> list_best_seller_food = new ArrayList<>();
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar1.setVisibility(View.VISIBLE);
+        //Best Seller
+        fb.food.whereGreaterThan("discountPercentage", 0).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for(int i = task.getResult().getDocuments().size()-1; i >= 0 ; i --)  {
+                        list_best_seller_food.add(new FoodModel(
+                                task.getResult().getDocuments().get(i).getString("name"),
+                                task.getResult().getDocuments().get(i).getString("category"),
+                                task.getResult().getDocuments().get(i).getString("description"),
+                                task.getResult().getDocuments().get(i).getString("image"),
+                                task.getResult().getDocuments().get(i).getDouble("price"),
+                                Math.toIntExact(task.getResult().getDocuments().get(i).getLong("discountPercentage")),
+                                task.getResult().getDocuments().get(i).getDouble("rate")
+                        ));
+                    }
+                    progressBar.setVisibility(View.INVISIBLE);
+                    recyclerView_bestseller_foods.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+                    FoodAdapter food_adapter = new FoodAdapter(list_best_seller_food);
+                    recyclerView_bestseller_foods.setAdapter(food_adapter);
+                }
+                else {
+                    //Log.w( "Error getting documents.", task.getException());
+                }
+            }
+        });
+        //Hot Food
+        fb.food.whereGreaterThanOrEqualTo("rate", 4).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                list_hot_food.add(new FoodModel(
+                                        document.getString("name"),
+                                        document.getString("category"),
+                                        document.getString("description"),
+                                        document.getString("image"),
+                                        document.getDouble("price"),
+                                        Math.toIntExact(document.getLong("discountPercentage")),
+                                        document.getDouble("rate")
+                                ));
+                            }
+                            progressBar1.setVisibility(View.INVISIBLE);
+                            recyclerView_hotfoods.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+                            FoodAdapter food_adapter = new FoodAdapter(list_hot_food);
+                            recyclerView_hotfoods.setAdapter(food_adapter);
+                        }
+                        else {
+                            //Log.w( "Error getting documents.", task.getException());
+                        }
+                    }
+                });
 
-        best_seller_food monan1 = new best_seller_food("Phở bò",           "35.000 VNĐ",R.drawable.pho_bo);
-        best_seller_food monan2 = new best_seller_food("Bún bò Huế",       "35.000 VNĐ",R.drawable.bun_bo_hue);
-        best_seller_food monan3 = new best_seller_food("Cơm gà xối mỡ",    "35.000 VNĐ",R.drawable.com_ga_xoi_mo);
-        best_seller_food monan4 = new best_seller_food("Hủ tiếu nam vang", "35.000 VNĐ",R.drawable.hu_tieu_nam_vang);
-        best_seller_food monan5 = new best_seller_food("Bánh mì thập cẩm ","30.000 VNĐ",R.drawable.banh_mi_thap_cam);
-        best_seller_food monan6 = new best_seller_food("Phở gà ",          "35.000 VNĐ",R.drawable.pho_ga);
-        best_seller_food monan7 = new best_seller_food("Cơm chiên hải sản","30.000 VNĐ",R.drawable.com_chien_hai_san);
-        best_seller_food monan8 = new best_seller_food("Hủ tiếu bò kho ", "35.000 VNĐ",R.drawable.hu_tieu_bo_kho);
-        list_best_seller_food.add(monan1);
-        list_best_seller_food.add(monan2);
-        list_best_seller_food.add(monan3);
-        list_best_seller_food.add(monan4);
-        list_best_seller_food.add(monan5);
-        list_best_seller_food.add(monan6);
-        list_best_seller_food.add(monan7);
-        list_best_seller_food.add(monan8);
-
-        best_seller_food_adapter bestseller_food_adapter = new best_seller_food_adapter(list_best_seller_food);
-
-        recyclerView_hotfoods.setLayoutManager(new GridLayoutManager(this, 2));
-        List<hot_food> list_hot_food = new ArrayList<>();
-
-        hot_food monan9  = new hot_food("Cơm sườn ",            "30.000 VNĐ",R.drawable.com_suon);
-        hot_food monan10 = new hot_food("Cơm sườn bì chả ",     "35.000 VNĐ",R.drawable.com_suon_bi_cha);
-        hot_food monan11 = new hot_food("Bún thịt nướng ",      "30.000 VNĐ",R.drawable.bun_thit_nuong);
-        hot_food monan12 = new hot_food("Cơm cá kho tộ",        "35.000 VNĐ",R.drawable.com_ca_kho_to);
-        hot_food monan13 = new hot_food("Cơm chiên dương châu", "30.000.000 VNĐ",R.drawable.com_chien_duong_chau);
-        hot_food monan14 = new hot_food("Bún cá",               "35.000.000 VNĐ",R.drawable.bun_ca);
-
-
-        list_hot_food.add(monan9);
-        list_hot_food.add(monan10);
-        list_hot_food.add(monan11);
-        list_hot_food.add(monan12);
-        list_hot_food.add(monan13);
-        list_hot_food.add(monan14);
-
-
-        hot_food_adapter hot_food_adapter = new hot_food_adapter(list_hot_food);
-
-
-
-        recyclerView_bestseller_foods.setAdapter(bestseller_food_adapter);
-        recyclerView_hotfoods.setAdapter(hot_food_adapter);
-
-
+        //Toolbar
         setSupportActionBar(toolbar);
+        //Navigation
         bottomNavigationView.setSelectedItemId(R.id.home);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -105,6 +128,28 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void addFood(){
+        FirestoreDatabase fb = new FirestoreDatabase();
+        List<FoodModel> list = new ArrayList();
+        list.add(new FoodModel("Phở bò","Bún/Phở","","",40000,0,4));
+        list.add(new FoodModel("Bún bò Huế","Bún/Phở","","",60000,15,4.8));
+        list.add(new FoodModel("Cơm gà xối mỡ","Cơm","","",35000,0,4));
+        list.add(new FoodModel("Hủ tiếu nam vang","Bún/Phở","","",60000,10,4.5));
+        list.add(new FoodModel("Bánh mì thập cẩm","Bánh","","",20000,10,4.1));
+        list.add(new FoodModel("Phở gà","Bún/Phở","","",40000,0,4));
+        list.add(new FoodModel("Cơm chiên hải sản","Cơm","","",40000,5,5));
+        list.add(new FoodModel("Hủ tiếu bò kho","Bún/Phở","","",35000,0,4));
+        list.add(new FoodModel("Cơm sườn","Cơm","","",30000,0,4));
+        list.add(new FoodModel("Cơm sườn bì chả","Cơm","","",40000,0,4));
+        list.add(new FoodModel("Bún thịt nướng","Bún/Phở","","",40000,0,3.5));
+        list.add(new FoodModel("Cơm cá kho tộ","Cơm","","",40000,10,3));
+        list.add(new FoodModel("Cơm chiên dương châu","Cơm","","",30000,0,4));
+        list.add(new FoodModel("Bún cá","Bún/Phở","","",40000,0,4));
+        for(int i=0; i<list.size(); i++){
+            fb.addFoods(list.get(i));
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -116,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.cart:
                 startActivity(new Intent(this, CartActivity.class));
+                break;
+            case R.id.notification:
                 break;
         }
         return super.onOptionsItemSelected(item);
