@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rlToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:background="@color/white">
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/ivBack"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:src="@drawable/ic_baseline_arrow_back">-->
+            <!--            </ImageView>-->
+
+            <ImageButton
+                android:id="@+id/ibBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/search_ic_back"
+                android:background="@color/white">
+            </ImageButton>
+
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tìm món ăn hoặc đồ uống"
+                android:layout_alignRight="@+id/ivBack"
+                android:layout_marginLeft="40dp"
+                android:background="@color/white"
+                android:singleLine="true"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:textCursorDrawable="@drawable/search_custom_cursor"
+                android:textColor="@color/black">
+
+            </EditText>
+
+        </androidx.appcompat.widget.Toolbar>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlTimKiem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rlToolBar"
+        android:paddingBottom="20dp"
+        android:paddingLeft="18dp"
+        android:background="#F9F7F7">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSearchRecent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

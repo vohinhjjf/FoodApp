@@ -8,6 +8,7 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/gray</item>
     </style>
+
     <style name="blueText">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/blue</item>

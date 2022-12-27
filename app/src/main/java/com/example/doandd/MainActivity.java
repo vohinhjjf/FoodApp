@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.doandd.adapter.FoodAdapter;
 import com.example.doandd.database.FirestoreDatabase;
@@ -30,22 +31,31 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView recyclerView_hotfoods, recyclerView_bestseller_foods;
     BottomNavigationView bottomNavigationView;
+    TextView tvSearch;
 
 
     List<FoodModel> list_best_seller_food = new ArrayList<>();
     List<FoodModel> list_hot_food = new ArrayList<>();
     FirestoreDatabase fb = new FirestoreDatabase();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    private void FindViewByIds(){
+        tvSearch = (TextView) findViewById(R.id.tvSearch);
         toolbar = findViewById(R.id.toolbar);
         progressBar = findViewById(R.id.progressBar);
         progressBar1 = findViewById(R.id.progressBar1);
         recyclerView_hotfoods = findViewById(R.id.rcv_hotfoods);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         recyclerView_bestseller_foods = findViewById(R.id.rcv_bestseller_foods);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // FindViewByIds
+        FindViewByIds();
+
 
         progressBar.setVisibility(View.VISIBLE);
         progressBar1.setVisibility(View.VISIBLE);
@@ -126,6 +136,15 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+
+        // Intent Search
+        tvSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent iActivitySearch = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(iActivitySearch);
+            }
+        });
     }
 
     public void addFood(){
@@ -167,4 +186,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
