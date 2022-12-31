@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.doandd.R;
 import com.example.doandd.model.CartModel;
 import com.example.doandd.utils.Format;
+import com.example.doandd.utils.ImageLoadTask;
 
 import java.util.List;
 
@@ -46,8 +47,8 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.CartView
         holder.price.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         holder.discount.setText(new Format().currency(discountPrice) +"đ");
         holder.discountPercent.setText(cartModel.getDiscountPercentage() +"%");
-        holder.amount.setText(String.valueOf((cartModel.getAmount())));
-        holder.imageView.setImageResource(cartModel.getImage());
+        holder.amount.setText(String.valueOf((int) cartModel.getAmount()));
+        new ImageLoadTask(cartModel.getImage(), holder.imageView).execute();
     }
     @Override
     public int getItemCount() {

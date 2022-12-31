@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doandd.adapter.VoucherAdapter;
 import com.example.doandd.database.FirestoreDatabase;
+import com.example.doandd.database.SharedPreference;
 import com.example.doandd.model.VoucherModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VoucherActivity extends AppCompatActivity {
+    TextView tvEmpty;
     private BottomNavigationView bottomNavigationView;
     private ProgressBar progressBar;
     List<VoucherModel> list_coupon_km = new ArrayList<>();
@@ -35,6 +38,7 @@ public class VoucherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voucher);
+        tvEmpty = findViewById(R.id.tvempty);
         progressBar = findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.VISIBLE);
         RecyclerView recyclerView_coupon_km = findViewById(R.id.rcv_coupon_km);
@@ -43,6 +47,9 @@ public class VoucherActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    if (task.getResult().isEmpty()){
+                        tvEmpty.setVisibility(View.VISIBLE);
+                    }
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         list_coupon_km.add(new VoucherModel(
                                 document.getId(),
@@ -54,7 +61,7 @@ public class VoucherActivity extends AppCompatActivity {
                         ));
                     }
                     progressBar.setVisibility(View.INVISIBLE);
-                    VoucherAdapter voucherAdapterKm = new VoucherAdapter(list_coupon_km, true);
+                    VoucherAdapter voucherAdapterKm = new VoucherAdapter(list_coupon_km, true,"voucher", VoucherActivity.this,0);
                     recyclerView_coupon_km.setAdapter(voucherAdapterKm);
                 }
                 else {
@@ -76,16 +83,23 @@ public class VoucherActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 List<VoucherModel> list = new ArrayList<>();
+                SharedPreference sharedpreference = new SharedPreference(VoucherActivity.this);
                 btnCaNhan.setBackgroundResource(R.drawable.rounded_coupon);
                 btnCaNhan.setTextAppearance(R.style.blueText);
                 recyclerView_coupon_ca_nhan.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
+                tvEmpty.setVisibility(View.INVISIBLE);
 
                 btnKhuyenMai.setBackgroundResource(R.color.white);
                 btnKhuyenMai.setTextAppearance(R.style.grayText);
+
                 recyclerView_coupon_km.setVisibility(View.INVISIBLE);
-                fb.user.document(fb.mAuth.getCurrentUser().getUid()).collection("voucher").get().addOnCompleteListener(task -> {
+                fb.user.document(sharedpreference.getID()).collection("voucher").get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        if (task.getResult().isEmpty()){
+                            tvEmpty.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             fb.voucher.document(document.getId()).get().addOnCompleteListener(task1 -> {
                                 if (task1.isSuccessful()) {
@@ -97,8 +111,8 @@ public class VoucherActivity extends AppCompatActivity {
                                             task1.getResult().getDouble("condition"),
                                             task1.getResult().getString("datetime")
                                     ));
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                    VoucherAdapter voucherAdapterCn = new VoucherAdapter(list, false);
+                                    progressBar.setVisibility(View.GONE);
+                                    VoucherAdapter voucherAdapterCn = new VoucherAdapter(list, false, "voucher", VoucherActivity.this,0);
                                     recyclerView_coupon_ca_nhan.setAdapter(voucherAdapterCn);
                                 }
                             });
@@ -123,6 +137,7 @@ public class VoucherActivity extends AppCompatActivity {
                 recyclerView_coupon_km.setVisibility(View.VISIBLE);
                 recyclerView_coupon_km.removeAllViewsInLayout();
                 progressBar.setVisibility(View.VISIBLE);
+                tvEmpty.setVisibility(View.INVISIBLE);
 
                 btnCaNhan.setBackgroundResource(R.color.white);
                 btnCaNhan.setTextAppearance(R.style.grayText);
@@ -131,6 +146,10 @@ public class VoucherActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            if (task.getResult().isEmpty()){
+                                tvEmpty.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.INVISIBLE);
+                            }
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 list.add(new VoucherModel(
                                         document.getId(),
@@ -142,7 +161,7 @@ public class VoucherActivity extends AppCompatActivity {
                                 ));
                             }
                             progressBar.setVisibility(View.INVISIBLE);
-                            VoucherAdapter voucherAdapterKm = new VoucherAdapter(list, true);
+                            VoucherAdapter voucherAdapterKm = new VoucherAdapter(list, true,"voucher", VoucherActivity.this,0);
                             recyclerView_coupon_km.setAdapter(voucherAdapterKm);
                         }
                         else {

@@ -121,7 +121,7 @@
                 android:drawableTint="#03A9F4"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="20dp"
-                android:text="Địa chỉ"
+                android:text="Địa chỉ của tôi"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
                 android:textSize="16sp"

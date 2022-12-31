@@ -15,14 +15,14 @@
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="horizontal">
 
-        <ImageView
+        <pl.droidsonroids.gif.GifImageView
             android:id="@+id/img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:layout_marginStart="20dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/pho_bo" />
+            android:src="@drawable/loading1" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,6 +73,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
+                        android:clickable="false"
                         android:gravity="end" />
                 </LinearLayout>
             </LinearLayout>

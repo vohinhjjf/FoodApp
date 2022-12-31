@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.doandd.adapter.AddressAdapter;
 import com.example.doandd.adapter.VoucherAdapter;
 import com.example.doandd.database.FirestoreDatabase;
+import com.example.doandd.database.SharedPreference;
 import com.example.doandd.model.AddressModel;
 import com.example.doandd.model.VoucherModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,8 +41,11 @@ public class AddressActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar2);
         progressBar.setVisibility(View.VISIBLE);
         //
+        Intent get_intent = getIntent();
+        //
         List<AddressModel> list_address = new ArrayList<>();
-        fb.user.document(fb.mAuth.getCurrentUser().getUid()).collection("delivery address").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        SharedPreference sharedpreference = new SharedPreference(this);
+        fb.user.document(sharedpreference.getID()).collection("delivery address").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -72,13 +76,32 @@ public class AddressActivity extends AppCompatActivity {
 
         //Back
         btnBack.setOnClickListener(view ->{
-            Intent intent = new Intent(this, PaymentActivity.class);
-            startActivity(intent);
+            if(get_intent.getStringExtra("total").equals("account")){
+                Intent intent = new Intent(this, AccountActivity.class);
+                startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(this, PaymentActivity.class);
+                intent.putExtra("total", get_intent.getStringExtra("total"));
+                intent.putStringArrayListExtra("listID", get_intent.getStringArrayListExtra("listID"));
+                startActivity(intent);
+            }
         });
 
         //Add1
         btnAdd.setOnClickListener(view ->{
             Intent intent = new Intent(this, AddAddressActivity.class);
+            intent.putExtra("Id", "id");
+            intent.putExtra("TypeAddress", "");
+            intent.putExtra("Name", "");
+            intent.putExtra("Phone", "");
+            intent.putExtra("Address", "");
+            intent.putExtra("Province", "Thành phố Hà Nội");
+            intent.putExtra("District", "Quận Ba Đình");
+            intent.putExtra("Commune", "Phường Phúc Xá");
+            intent.putExtra("Check", false);
+            intent.putExtra("total", get_intent.getStringExtra("total"));
+            intent.putStringArrayListExtra("listID", get_intent.getStringArrayListExtra("listID"));
             startActivity(intent);
         });
     }

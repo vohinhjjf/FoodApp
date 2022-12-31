@@ -1,17 +1,23 @@
 package com.example.doandd;
 
+import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.doandd.adapter.FoodAdapter;
 import com.example.doandd.database.FirestoreDatabase;
@@ -26,27 +32,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public static boolean mShouldRecreateActivity;
     ProgressBar progressBar, progressBar1;
     Toolbar toolbar;
+    TextView tvSearch;
     RecyclerView recyclerView_hotfoods, recyclerView_bestseller_foods;
     BottomNavigationView bottomNavigationView;
-
+    Button btnCom, btnBunPho, btnDoUong, btnBanh;
 
     List<FoodModel> list_best_seller_food = new ArrayList<>();
     List<FoodModel> list_hot_food = new ArrayList<>();
     FirestoreDatabase fb = new FirestoreDatabase();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    private void findViewByIds(){
         toolbar = findViewById(R.id.toolbar);
+        tvSearch = findViewById(R.id.tvSearch);
+        btnCom = findViewById(R.id.btnCom);
+        btnBunPho = findViewById(R.id.btnBunPho);
+        btnDoUong = findViewById(R.id.btnDoUong);
+        btnBanh = findViewById(R.id.btnBanh);
         progressBar = findViewById(R.id.progressBar);
         progressBar1 = findViewById(R.id.progressBar1);
         recyclerView_hotfoods = findViewById(R.id.rcv_hotfoods);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         recyclerView_bestseller_foods = findViewById(R.id.rcv_bestseller_foods);
+    }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        findViewByIds();
+        selectCategory();
         progressBar.setVisibility(View.VISIBLE);
         progressBar1.setVisibility(View.VISIBLE);
         //Best Seller
@@ -68,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     progressBar.setVisibility(View.INVISIBLE);
                     recyclerView_bestseller_foods.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-                    FoodAdapter food_adapter = new FoodAdapter(list_best_seller_food);
+                    FoodAdapter food_adapter = new FoodAdapter(list_best_seller_food, MainActivity.this,"MainActivity");
                     recyclerView_bestseller_foods.setAdapter(food_adapter);
                 }
                 else {
@@ -95,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             progressBar1.setVisibility(View.INVISIBLE);
                             recyclerView_hotfoods.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-                            FoodAdapter food_adapter = new FoodAdapter(list_hot_food);
+                            FoodAdapter food_adapter = new FoodAdapter(list_hot_food, MainActivity.this,"MainActivity");
                             recyclerView_hotfoods.setAdapter(food_adapter);
                         }
                         else {
@@ -106,6 +123,18 @@ public class MainActivity extends AppCompatActivity {
 
         //Toolbar
         setSupportActionBar(toolbar);
+        //
+        tvSearch.setOnClickListener(view -> {
+            startActivity(new Intent(this, SearchActivity.class));
+        });
+        //
+        SharedPreferences sharedPreferences = getSharedPreferences("night",0);
+        boolean booleanValue = sharedPreferences.getBoolean("night_mode",false);
+        if (booleanValue){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
         //Navigation
         bottomNavigationView.setSelectedItemId(R.id.home);
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -150,6 +179,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void selectCategory(){
+        Intent intent=new Intent(MainActivity.this, ListFoodActivity.class);
+        btnCom.setOnClickListener(view -> {
+            intent.putExtra("category", "Cơm");
+            startActivity(intent);
+        });
+        btnBanh.setOnClickListener(view -> {
+            intent.putExtra("category", "Bánh");
+            startActivity(intent);
+        });
+        btnBunPho.setOnClickListener(view -> {
+            intent.putExtra("category", "Bún/Phở");
+            startActivity(intent);
+        });
+        btnDoUong.setOnClickListener(view -> {
+            intent.putExtra("category", "Đồ uống");
+            startActivity(intent);
+        });
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -167,4 +216,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

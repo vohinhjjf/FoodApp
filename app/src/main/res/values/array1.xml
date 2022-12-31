@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array">
+        <item>Chọn vấn đề hỗ trợ</item>
+        <item>Tài khoản</item>
+        <item>Món ăn</item>
+        <item>Ưu đãi</item>
+        <item>Thanh toán</item>
+        <item>Giỏ hàng</item>
+        <item>Đơn hàng</item>
+        <item>Lỗi ứng dụng</item>
+    </string-array>
+    <string-array name="gender">
+        <item>Nam</item>
+        <item>Nữ</item>
+    </string-array>
+</resources>

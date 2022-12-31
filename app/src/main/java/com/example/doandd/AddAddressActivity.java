@@ -18,15 +18,16 @@ import androidx.core.content.ContextCompat;
 
 import com.example.doandd.database.FirestoreDatabase;
 import com.example.doandd.database.JSONRead;
+import com.example.doandd.database.SharedPreference;
 import com.example.doandd.model.AddressModel;
 
 import java.util.List;
+import java.util.Objects;
 
 public class AddAddressActivity extends AppCompatActivity {
     Spinner spProvince, spDistric, spCommune;
     Button btnHome, btnOffice, btnAdd, btnBack;
     EditText etName, etPhone, etAddress;
-    CheckBox cbMacDinh;
     String province, district, commune;
     JSONRead jsonRead = new JSONRead(this);
     FirestoreDatabase fb = new FirestoreDatabase();
@@ -44,7 +45,22 @@ public class AddAddressActivity extends AppCompatActivity {
         etName = findViewById(R.id.etName);
         etPhone = findViewById(R.id.etPhone);
         etAddress = findViewById(R.id.etAddress);
-        cbMacDinh = findViewById(R.id.cbMacdinh);
+    }
+
+    private void getData(){
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("Id");
+        String typeAddress = intent.getStringExtra("TypeAddress");
+        String name = intent.getStringExtra("Name");
+        String phone = intent.getStringExtra("Phone");
+        String address = intent.getStringExtra("Address");
+        if(!Objects.equals(id, "id")){
+            etName.setText(name);
+            etPhone.setText(phone);
+            etAddress.setText(address);
+            home_office = Objects.equals(typeAddress, "Nhà riêng");
+            btnAdd.setText("Cập nhật");
+        }
     }
 
     public void setHomeOffice(){
@@ -60,13 +76,13 @@ public class AddAddressActivity extends AppCompatActivity {
         });
     }
 
-    public void addAddress(){
+    public void addAddress(SharedPreference sharedpreference){
         if (etName.getText().toString().trim().equalsIgnoreCase("")) {
-            etName.setError("This field can not be blank");
+            etName.setError("Trường này không được để trống");
         } else if (etPhone.getText().toString().trim().equalsIgnoreCase("")) {
-            etPhone.setError("This field can not be blank");
+            etPhone.setError("Trường này không được để trống");
         } else if (etAddress.getText().toString().trim().equalsIgnoreCase("")) {
-            etAddress.setError("This field can not be blank");
+            etAddress.setError("Trường này không được để trống");
         }else{
             String typeAddress=home_office?"Nhà riêng":"Văn phòng";
             System.out.println("Home/Office: "+typeAddress);
@@ -76,18 +92,20 @@ public class AddAddressActivity extends AppCompatActivity {
             System.out.println("District: "+district);
             System.out.println("Commune: "+commune);
             System.out.println("Address: "+etAddress.getText());
-            System.out.println("Default: "+checkMacDinh);
             AddressModel addressModel = new AddressModel(
                     "", etName.getText().toString(), etPhone.getText().toString(),
                     province, district, commune, etAddress.getText().toString(), typeAddress, checkMacDinh);
-            fb.addAddress(addressModel);
+            fb.addAddress(addressModel, sharedpreference.getID());
             ProgressDialog mProgressDialog =new ProgressDialog(this);
-            mProgressDialog.setMessage("Adding address!");
+            mProgressDialog.setMessage("Đang thêm địa chỉ!");
             mProgressDialog.show();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    Intent get_intent = getIntent();
                     Intent intent = new Intent(AddAddressActivity.this,AddressActivity.class);
+                    intent.putExtra("total", get_intent.getStringExtra("total"));
+                    intent.putStringArrayListExtra("listID", get_intent.getStringArrayListExtra("listID"));
                     startActivity(intent);
                 }
             }, 2000 );
@@ -95,11 +113,14 @@ public class AddAddressActivity extends AppCompatActivity {
     }
 
     public void getListProvince(){
+        Intent intent = getIntent();
+        String st_province = intent.getStringExtra("Province");
         List<String> list_province = jsonRead.getListProvince();
-        province = list_province.get(0);
+        province = list_province.get(list_province.indexOf(st_province));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list_province);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spProvince.setAdapter(adapter);
+        spProvince.setSelection(list_province.indexOf(st_province));
         spProvince.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener () {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -113,15 +134,17 @@ public class AddAddressActivity extends AppCompatActivity {
     }
 
     public void getListDistrict(List<String> items){
-        district = items.get(0);
+        Intent intent = getIntent();
+        String st_district = intent.getStringExtra("District");
+        district = st_district;
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spDistric.setAdapter(adapter);
+        spDistric.setSelection(items.indexOf(st_district));
         spDistric.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener () {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 district = items.get(position);
-                System.out.println("Select: "+jsonRead.getListCommune(province,district).get(0));
                 getListCommune(jsonRead.getListCommune(province,district));
             }
 
@@ -131,10 +154,13 @@ public class AddAddressActivity extends AppCompatActivity {
     }
 
     public void getListCommune(List<String> items){
-        commune = items.get(0);
+        Intent intent = getIntent();
+        String st_commune = intent.getStringExtra("Commune");
+        commune = st_commune;
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spCommune.setAdapter(adapter);
+        spCommune.setSelection(items.indexOf(st_commune));
         spCommune.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener () {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -145,26 +171,62 @@ public class AddAddressActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
-
+        SharedPreference sharedpreference = new SharedPreference(this);
         findViewsByIds();
+        getData();
         setHomeOffice();
+        //
+        Intent get_intent = getIntent();
         //Them dia chi
-        btnAdd.setOnClickListener(view -> addAddress());
+        btnAdd.setOnClickListener(view -> {
+            if(get_intent.getStringExtra("Id").equals("id")){
+                addAddress(sharedpreference);
+            } else{
+                updateAddress(get_intent.getStringExtra("Id"),sharedpreference);
+            }
+        });
         //Tinh
         getListProvince();
-        //
-        cbMacDinh.setOnClickListener(view -> {
-            checkMacDinh = !checkMacDinh;
-            cbMacDinh.setChecked(checkMacDinh);
-        });
         //Back
         btnBack.setOnClickListener(view ->{
             Intent intent = new Intent(this, AddressActivity.class);
+            intent.putExtra("total", get_intent.getStringExtra("total"));
+            intent.putStringArrayListExtra("listID", get_intent.getStringArrayListExtra("listID"));
             startActivity(intent);
         });
+    }
+
+    private void updateAddress(String id,SharedPreference sharedpreference) {
+        if (etName.getText().toString().trim().equalsIgnoreCase("")) {
+            etName.setError("Trường này không được để trống");
+        } else if (etPhone.getText().toString().trim().equalsIgnoreCase("")) {
+            etPhone.setError("Trường này không được để trống");
+        } else if (etAddress.getText().toString().trim().equalsIgnoreCase("")) {
+            etAddress.setError("Trường này không được để trống");
+        }else{
+            String typeAddress=home_office?"Nhà riêng":"Văn phòng";
+            AddressModel addressModel = new AddressModel(
+                    id, etName.getText().toString(), etPhone.getText().toString(),
+                    province, district, commune, etAddress.getText().toString(), typeAddress, checkMacDinh);
+            fb.updateAddress(addressModel, sharedpreference.getID());
+            ProgressDialog mProgressDialog =new ProgressDialog(this);
+            mProgressDialog.setMessage("Đang cập nhật thông tin!");
+            mProgressDialog.show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent get_intent = getIntent();
+                    Intent intent = new Intent(AddAddressActivity.this,AddressActivity.class);
+                    intent.putExtra("total", get_intent.getStringExtra("total"));
+                    intent.putStringArrayListExtra("listID", get_intent.getStringArrayListExtra("listID"));
+                    startActivity(intent);
+                }
+            }, 2000 );
+        }
     }
 }

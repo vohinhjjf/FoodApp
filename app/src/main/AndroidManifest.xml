@@ -24,6 +24,8 @@
         <activity android:name=".PaymentActivity"/>
         <activity android:name=".AddressActivity"/>
         <activity android:name=".AddAddressActivity"/>
+        <activity android:name=".MyVoucherActivity"/>
+        <activity android:name=".PurchaseOrderActivity"/>
         <activity android:name=".SplashActivity"
             android:label="@string/home"
             android:icon="@drawable/food"
@@ -34,6 +36,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".InfoOrderActivity" />
+        <activity android:name=".ListFoodActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".InfoFoodActivity" />
+        <activity android:name=".FeedbackActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".DayNightActivity" />
     </application>
 
 </manifest>

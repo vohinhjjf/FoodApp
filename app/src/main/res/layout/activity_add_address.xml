@@ -109,7 +109,7 @@
                     android:hint="Họ và tên"
                     android:padding="16dp"
                     android:textColor="@color/black"
-                    android:textSize="14dp" />
+                    android:textSize="16dp" />
 
 
                 <View
@@ -129,7 +129,7 @@
                     android:hint="Số điện thoại"
                     android:padding="16dp"
                     android:textColor="@color/black"
-                    android:textSize="14dp" />
+                    android:textSize="16dp" />
             </LinearLayout>
 
             <TextView
@@ -191,9 +191,9 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/white_radius"
                     android:hint="Địa chỉ (Số nhà, đường phố)"
-                    android:padding="16dp"
+                    android:padding="10dp"
                     android:textColor="@color/black"
-                    android:textSize="14dp" />
+                    android:textSize="16dp" />
             </LinearLayout>
 
             <View
@@ -202,41 +202,9 @@
                 android:layout_marginTop="10dp"
                 android:background="#C8C8C8" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/tvMacDinh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/white_radius"
-                    android:padding="16dp"
-                    android:text="Đặt làm địa chỉ mặc định"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <CheckBox
-                    android:id="@+id/cbMacdinh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
                 android:id="@+id/btnThemDiaChi"
-                style="@style/Widget.AppCompat.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="5dp"

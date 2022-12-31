@@ -25,6 +25,12 @@ public class VoucherModel {
     public String getTitle(){
         return title;
     }
+    public double getDiscount(){
+        return discount;
+    }
+    public double getCondition(){
+        return condition;
+    }
     public String getDate(){
         return date;
      }

@@ -78,10 +78,10 @@ public class SignUpActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         fb.createUser(new UserModel(
-                                task.getResult().getUser().getUid(),_name,"",_email, "","",""));
+                                task.getResult().getUser().getUid(),_name,"","",_email, "","",""));
                         Toast.makeText(SignUpActivity.this, "User registered successfully",
                                 Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                        //startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(SignUpActivity.this, "Authentication failed."+ Objects.requireNonNull(task.getException()).getMessage(),

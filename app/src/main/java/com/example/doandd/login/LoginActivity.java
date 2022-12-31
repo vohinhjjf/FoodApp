@@ -1,6 +1,8 @@
 package com.example.doandd.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText email, password;
     Button btnLogin, btnSignUp;
     FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(view ->
         {
+            System.out.println(email.getText());
+            System.out.println(password.getText());
             loginUser();
         });
         btnSignUp = (Button) findViewById(R.id.btnSignUp);
@@ -56,10 +61,13 @@ public class LoginActivity extends AppCompatActivity {
             password.requestFocus();
         }else {
             mAuth.signInWithEmailAndPassword(_email,_password).addOnCompleteListener(new OnCompleteListener<AuthResult>(){
-
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        SharedPreferences sharedpreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString("ID", mAuth.getUid());
+                        editor.commit();
                         // Sign in success, update UI with the signed-in user's information
                         Toast.makeText(LoginActivity.this, "User login successfully",
                                 Toast.LENGTH_SHORT).show();

@@ -5,6 +5,10 @@
             <solid android:color="#fffcd511"/>
             <size android:width="60dp"
                 android:height="60dp"/>
+            <corners
+                android:radius="15dp"
+                android:bottomLeftRadius="0dp"
+                android:bottomRightRadius="0dp"/>
         </shape>
     </item>
     <item>

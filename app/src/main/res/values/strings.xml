@@ -3,7 +3,6 @@
     <string name="home">Food Store</string>
     <string name="account">Thông tin cá nhân</string>
     <string name="new_user_register_now">Register Now</string>
-
     <style name="grayText">
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/gray</item>
@@ -12,4 +11,10 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/blue</item>
     </style>
+    <style name="roundImage" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">22dp</item>
+        <item name="color">@color/white</item>
+    </style>
+
 </resources>

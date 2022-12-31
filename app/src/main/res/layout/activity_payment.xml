@@ -47,7 +47,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/btnThanhToan"
+            android:id="@+id/btnPayment"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
-                        android:id="@+id/tvNameAddress"
+                        android:id="@+id/tvNameAddressPayment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -125,7 +125,7 @@
                         android:textSize="14dp" />
 
                     <TextView
-                        android:id="@+id/tvAddress"
+                        android:id="@+id/tvAddressPayment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Đường Tạ Quang Bửu, khu phố 6, phường Linh Trung, thành phố Thủ Đức, Thành phố Hồ Chí Minh"
@@ -177,9 +177,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/bg_select_2"
                 android:backgroundTint="#80BFDEF6"
-                android:foreground="@drawable/round_button"
+                android:foreground="@drawable/bg_select_2"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
@@ -188,7 +188,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:buttonTint="@color/blue" />
+                    android:buttonTint="@color/blue"
+                    android:checked="true" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -312,7 +313,7 @@
                         android:id="@+id/tvTongTienHang"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="20.000đ"
+                        android:text="0đ"
                         android:textColor="@color/black"
                         android:textSize="14dp"
                         app:layout_constraintRight_toRightOf="parent"
@@ -338,8 +339,35 @@
                         android:id="@+id/tvPhiVanChuyen"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="20.000đ"
+                        android:text="0đ"
+                        android:textColor="@color/teal_700"
+                        android:textSize="14dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ctKhuyenMai"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Voucher khuyến mãi"
                         android:textColor="@color/black"
+                        android:textSize="14dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvKhuyenMai"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-0đ"
+                        android:textColor="@color/red"
                         android:textSize="14dp"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
