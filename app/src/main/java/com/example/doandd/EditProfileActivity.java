@@ -1,30 +1,42 @@
 package com.example.doandd;
 
+import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doandd.database.FirestoreDatabase;
 import com.example.doandd.database.SharedPreference;
 import com.example.doandd.utils.ImageLoadTask;
 
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class EditProfileActivity extends AppCompatActivity {
-    private EditText addressEdtView, nameEdtView, birthdayEdtView, emailEdtView, phoneEdtView;
+    TextView birthdayEdtView;
+    private EditText addressEdtView, nameEdtView, emailEdtView, phoneEdtView;
     private ImageView imgUser;
     Spinner spGender;
     Button btnBack, btnEditProfile,btnEditImage;
     FirestoreDatabase fb =new FirestoreDatabase();
     int SELECT_PICTURE = 200;
+    Uri selectedImageUri;
 
     private void findViewByIds(){
         nameEdtView = findViewById(R.id.name_editText);
@@ -72,10 +84,56 @@ public class EditProfileActivity extends AppCompatActivity {
             imageChooser();
         });
         //
+        btnEditProfile.setOnClickListener(view -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Thông báo");
+            builder.setMessage("Cập nhật thông tin thành công!");
+            builder.setNegativeButton("Đóng", (DialogInterface.OnClickListener) (dialog, which) -> {
+                // If user click no then dialog box is canceled.
+                dialog.cancel();
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            Map<String, Object> data = new HashMap<>();
+            data.put("name", nameEdtView.getText().toString());
+            data.put("address", addressEdtView.getText().toString());
+            data.put("gender", spGender.getSelectedItem().toString());
+            data.put("phone", phoneEdtView.getText().toString());
+            data.put("birthday", birthdayEdtView.getText().toString());
+            fb.uploadImage(data, selectedImageUri, sharedpreference.getID(), "avatar");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    alertDialog.cancel();
+                    startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
+                }
+            }, 2000 );
+
+        });
+        //
         btnBack.setOnClickListener(view -> {
             Intent intent = new Intent(this, AccountActivity.class);
             startActivity(intent);
         });
+        //
+        birthdayEdtView.setOnClickListener(this::openDatePickerDialog);
+        //
+    }
+
+    public void openDatePickerDialog(final View v) {
+
+        Calendar cal = Calendar.getInstance();
+        // Get Current Date
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                (view, year, monthOfYear, dayOfMonth) -> {
+                    String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                    if (v.getId() == R.id.birthday_editText) {
+                        ((TextView) v).setText(selectedDate);
+                    }
+                }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+
+        datePickerDialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
+        datePickerDialog.show();
     }
 
     void imageChooser() {
@@ -102,7 +160,7 @@ public class EditProfileActivity extends AppCompatActivity {
             // SELECT_PICTURE constant
             if (requestCode == SELECT_PICTURE) {
                 // Get the url of the image from data
-                Uri selectedImageUri = data.getData();
+                selectedImageUri = data.getData();
                 if (null != selectedImageUri) {
                     // update the preview image in the layout
                     imgUser.setImageURI(selectedImageUri);

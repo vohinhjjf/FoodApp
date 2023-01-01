@@ -86,8 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="10dp"
-                android:text="Lien he"
-                android:textColor="@color/black"
+                android:text="Liên hệ"
                 android:textSize="20dp" />
 
             <LinearLayout
@@ -105,10 +104,11 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/white_radius"
                     android:drawableStart="@drawable/ic_person"
+                    android:drawableTint="@color/black"
                     android:drawablePadding="16dp"
                     android:hint="Họ và tên"
                     android:padding="16dp"
-                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
                     android:textSize="16dp" />
 
 
@@ -125,8 +125,10 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/white_radius"
                     android:drawableStart="@drawable/ic_phone"
+                    android:drawableTint="@color/black"
                     android:drawablePadding="16dp"
                     android:hint="Số điện thoại"
+                    android:textColorHint="@color/gray"
                     android:padding="16dp"
                     android:textColor="@color/black"
                     android:textSize="16dp" />
@@ -137,7 +139,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginVertical="10dp"
                 android:text="Địa chỉ"
-                android:textColor="@color/black"
                 android:textSize="20dp" />
 
             <LinearLayout
@@ -192,7 +193,7 @@
                     android:background="@drawable/white_radius"
                     android:hint="Địa chỉ (Số nhà, đường phố)"
                     android:padding="10dp"
-                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
                     android:textSize="16dp" />
             </LinearLayout>
 

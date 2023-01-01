@@ -48,7 +48,7 @@ public class InfoFoodActivity extends AppCompatActivity {
         Intent get_intent = getIntent();
         String id = get_intent.getStringExtra("id");
         double price = get_intent.getDoubleExtra("price",0);
-        double discount_price = get_intent.getDoubleExtra("discount percent",0);
+        int discount_price = get_intent.getIntExtra("discount percent",0);
         tvName.setText(get_intent.getStringExtra("name"));
         tvPrice.setText(new Format().currency(price) + "đ");
         tvDiscountPercent.setText(discount_price+"%");
@@ -59,6 +59,9 @@ public class InfoFoodActivity extends AppCompatActivity {
         tvPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         if(discount_price == 0){
             llPrice.setVisibility(View.GONE);
+        }
+        else {
+            llPrice.setVisibility(View.VISIBLE);
         }
         btnAdd.setOnClickListener(view -> {
             ProgressDialog mProgressDialog =new ProgressDialog(InfoFoodActivity.this);

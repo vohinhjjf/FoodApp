@@ -42,8 +42,6 @@
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:background="@drawable/round_button"
-        android:backgroundTint="#FFFFFF"
-        android:foreground="@drawable/round_button"
         android:text="+ Thêm địa chỉ mới"
         android:textColor="@color/blue"
         android:textStyle="bold"

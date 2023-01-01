@@ -2,10 +2,9 @@ package com.example.doandd.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +15,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doandd.InfoFoodActivity;
-import com.example.doandd.ListFoodActivity;
-import com.example.doandd.MainActivity;
 import com.example.doandd.model.FoodModel;
 import com.example.doandd.R;
 import com.example.doandd.utils.Format;
@@ -50,7 +45,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         if(foodModel==null){
             return;
         }
-        new ImageLoadTask(foodModel.getImage(), holder.img).execute();
+        AsyncTask<Void, Void, Bitmap> task = new ImageLoadTask(foodModel.getImage(), holder.img).execute();
         double discountPrice = foodModel.getPrice()*(100 -foodModel.getDiscountPercentage())/100;
         holder.name.setText(foodModel.getName());
         holder.rate.setRating((float) foodModel.getRate());
@@ -75,12 +70,15 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             intent.putExtra("image", foodModel.getImage());
             intent.putExtra("rating", (float) foodModel.getRate());
             context.startActivity(intent);
+            task.cancel(false);
         });
     }
+
     @Override
     public int getItemCount() {
         if (list_food!= null){
-            return list_food.size();}
+            return list_food.size();
+        }
         return 0;
     }
     static class FoodViewHolder extends RecyclerView.ViewHolder{

@@ -21,7 +21,7 @@
         app:title=" ">
 
         <Button
-            android:id="@+id/btnBackInfoOrder"
+            android:id="@+id/btnBackFeedback"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/ic_back" />
@@ -129,8 +129,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Chọn hình ảnh"
-                        android:textColor="@color/black"
                         android:textSize="20dp"
+                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

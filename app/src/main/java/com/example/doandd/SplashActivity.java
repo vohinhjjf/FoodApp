@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.doandd.database.SharedPreference;
 import com.example.doandd.login.LoginActivity;
@@ -34,8 +35,8 @@ public class SplashActivity extends AppCompatActivity {
         SharedPreference sharedpreferences = new SharedPreference(this);
         System.out.println("ID: "+sharedpreferences.getID());
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
         progressBar.setVisibility(View.GONE);
+        sharedpreferences.getMode();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

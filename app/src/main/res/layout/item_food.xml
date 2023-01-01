@@ -87,6 +87,7 @@
         android:layout_marginStart="5dp"
         android:text="description"
         android:textAllCaps="false"
+        android:textColor="#8C8B8B"
         android:textSize="14dp" />
 
     <TextView

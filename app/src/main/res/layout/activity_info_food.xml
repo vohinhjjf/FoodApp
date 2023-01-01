@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".InfoFoodActivity">
 
@@ -23,11 +22,11 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="360dp">
+                android:layout_height="410dp">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="230dp"
+                    android:layout_height="280dp"
                     android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +36,7 @@
                         android:id="@+id/imgInfoFood"
                         android:layout_width="match_parent"
                         android:layout_height="410dp"
-                        android:layout_marginTop="-13dp"
+                        android:layout_marginTop="-50dp"
                         android:src="@drawable/pho_bo" />
                 </androidx.cardview.widget.CardView>
 
@@ -70,11 +69,10 @@
 
                         <RatingBar
                             android:id="@+id/rateInfoFood"
-                            style="?android:attr/ratingBarStyleSmall"
+                            style="@android:style/Widget.Material.RatingBar.Indicator"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:gravity="center"
                             android:numStars="5"
                             android:rating="4.5" />
 
@@ -111,19 +109,18 @@
                             android:layout_marginTop="5dp"
                             android:text="50.000đ"
                             android:textColor="@color/red"
-                            android:textSize="20dp"
+                            android:textSize="24dp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <Button
                     android:id="@+id/btnBackInfoOrder"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/ic_back"
-                    android:backgroundTint="@color/white"
+                    android:background="@drawable/bg_back"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -134,7 +131,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginHorizontal="25dp"
-                android:background="@color/white"
                 android:orientation="vertical"
                 android:padding="10dp">
 
@@ -144,7 +140,6 @@
                     android:drawableLeft="@drawable/ic_delivery"
                     android:drawablePadding="10dp"
                     android:text="Hình Thức Giao Hàng"
-                    android:textColor="@color/black"
                     android:textSize="16dp"
                     android:textStyle="bold"
                     app:drawableTint="@color/blue" />
@@ -154,7 +149,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:text="Giao bởi tài xê"
-                    android:textColor="@color/black"
                     android:textSize="16dp" />
             </LinearLayout>
 
@@ -170,7 +164,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
                 android:layout_marginBottom="15dp"
-                android:background="@color/white"
                 android:orientation="vertical"
                 android:padding="10dp">
 
@@ -180,7 +173,6 @@
                     android:drawableLeft="@drawable/ic_info"
                     android:drawablePadding="10dp"
                     android:text="Mô tả chi tiết"
-                    android:textColor="@color/black"
                     android:textSize="16dp"
                     android:textStyle="bold"
                     app:drawableTint="@color/blue" />
@@ -191,7 +183,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Mô tả chi tiết"
-                    android:textColor="@color/black"
                     android:textSize="16dp" />
 
 
@@ -203,7 +194,6 @@
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -220,4 +210,5 @@
             android:textSize="20dp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

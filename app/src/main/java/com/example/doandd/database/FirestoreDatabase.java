@@ -4,6 +4,7 @@ import static com.google.android.gms.tasks.Tasks.await;
 import static com.google.android.gms.tasks.Tasks.whenAllComplete;
 import static com.google.android.gms.tasks.Tasks.whenAllSuccess;
 
+import android.net.Uri;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -15,14 +16,21 @@ import com.example.doandd.model.OrderModel;
 import com.example.doandd.model.VoucherModel;
 import com.example.doandd.model.FoodModel;
 import com.example.doandd.model.UserModel;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,6 +42,8 @@ import java.util.Objects;
 
 public class FirestoreDatabase {
     public FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseStorage rootRef = FirebaseStorage.getInstance();
+    StorageReference storageRef = rootRef.getReferenceFromUrl("gs://foodapp-dc6b4.appspot.com/");
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public CollectionReference user = db.collection("Users");
     public CollectionReference voucher = db.collection("Voucher");
@@ -107,5 +117,53 @@ public class FirestoreDatabase {
 
     public void deleteSearchRecent(String id, String value){
         user.document(id).collection("search history").document(value).delete();
+    }
+
+    public void uploadImage(Map<String, Object> data, Uri file, String uid, String type){
+        StorageReference riversRef = storageRef.child("user/"+uid+"/"+type+"/"+file.getLastPathSegment());
+        UploadTask uploadTask = riversRef.putFile(file);
+
+        // Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+
+                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+
+                        // Continue with the task to get the download URL
+                        return riversRef.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri downloadUri = task.getResult();
+                            data.put("image", downloadUri);
+                            if(Objects.equals(type, "avatar")) {
+                                user.document(uid).update(data);
+                            }
+                            else {
+                                user.document(uid).collection("feecback").add(data);
+                            }
+                        } else {
+                            // Handle failures
+                            // ...
+                        }
+                    }
+                });
+
+            }
+        });
     }
 }

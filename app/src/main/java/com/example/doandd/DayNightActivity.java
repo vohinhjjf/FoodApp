@@ -14,7 +14,6 @@ public class DayNightActivity extends AppCompatActivity {
 
     ImageView imageView;
     SwitchCompat switchCompat;
-    SharedPreferences sharedPreferences = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +23,7 @@ public class DayNightActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         switchCompat = findViewById(R.id.switchCompat);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("night",0);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs",0);
         boolean booleanValue = sharedPreferences.getBoolean("night_mode",false);
         if (booleanValue){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);

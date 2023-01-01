@@ -117,7 +117,7 @@ public class AddAddressActivity extends AppCompatActivity {
         String st_province = intent.getStringExtra("Province");
         List<String> list_province = jsonRead.getListProvince();
         province = list_province.get(list_province.indexOf(st_province));
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list_province);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list_province);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spProvince.setAdapter(adapter);
         spProvince.setSelection(list_province.indexOf(st_province));
@@ -137,7 +137,7 @@ public class AddAddressActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String st_district = intent.getStringExtra("District");
         district = st_district;
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spDistric.setAdapter(adapter);
         spDistric.setSelection(items.indexOf(st_district));
@@ -157,7 +157,7 @@ public class AddAddressActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String st_commune = intent.getStringExtra("Commune");
         commune = st_commune;
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spCommune.setAdapter(adapter);
         spCommune.setSelection(items.indexOf(st_commune));

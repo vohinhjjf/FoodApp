@@ -25,8 +25,7 @@ import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
     EditText name, email, password;
-    TextView btnHaveAccount;
-    Button btnSignUp;
+    Button btnSignUp,btnHaveAccount;
     FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.editEmail2);
         password = (EditText) findViewById(R.id.editPassword2);
         btnSignUp = (Button) findViewById(R.id.btnSignUp2);
-        btnHaveAccount = (TextView) findViewById(R.id.alreadyHaveAccount);
+        btnHaveAccount = (Button) findViewById(R.id.alreadyHaveAccount);
 
         mAuth = FirebaseAuth.getInstance();
 
