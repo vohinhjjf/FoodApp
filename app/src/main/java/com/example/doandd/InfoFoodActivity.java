@@ -21,6 +21,9 @@ import com.example.doandd.database.SharedPreference;
 import com.example.doandd.model.CartModel;
 import com.example.doandd.utils.Format;
 import com.example.doandd.utils.ImageLoadTask;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.Objects;
 
 public class InfoFoodActivity extends AppCompatActivity {
     TextView tvName, tvPrice, tvDiscountPercent, tvDiscount, tvDescription;
@@ -29,6 +32,7 @@ public class InfoFoodActivity extends AppCompatActivity {
     ImageView imgFood;
     LinearLayout llPrice;
     FirestoreDatabase fb =new FirestoreDatabase();
+    boolean check = false;
 
     private void findViewByIds() {
         tvName =  findViewById(R.id.NameFood);
@@ -73,29 +77,61 @@ public class InfoFoodActivity extends AppCompatActivity {
                     get_intent.getStringExtra("image"),
                     get_intent.getDoubleExtra("rating",0),1, false
                     );
-            fb.addCart(cartModel, sharedpreference.getID()).addOnCompleteListener(task -> {
+            fb.cart.document(sharedpreference.getID()).collection("products").get().addOnCompleteListener(task -> {
                 if(task.isSuccessful()){
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mProgressDialog.cancel();
-                            AlertDialog.Builder builder = new AlertDialog.Builder(InfoFoodActivity.this);
-                            builder.setTitle("Hoàn tất  !");
-                            builder.setMessage("Đã thêm món ăn vào giỏ hàng!");
-                            builder.setNegativeButton("Đóng", (DialogInterface.OnClickListener) (dialog, which) -> {
-                                // If user click no then dialog box is canceled.
-                                dialog.cancel();
-                            });
-                            AlertDialog alertDialog = builder.create();
-                            alertDialog.show();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if(Objects.equals(document.getString("name"), get_intent.getStringExtra("name"))){
+                            fb.cart.document(sharedpreference.getID()).collection("products")
+                                    .document(document.getId()).update("amount",document.getDouble("amount")+1);
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    alertDialog.cancel();
+                                    mProgressDialog.cancel();
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(InfoFoodActivity.this);
+                                    builder.setTitle("Hoàn tất  !");
+                                    builder.setMessage("Đã thêm món ăn vào giỏ hàng!");
+                                    builder.setNegativeButton("Đóng", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                        // If user click no then dialog box is canceled.
+                                        dialog.cancel();
+                                    });
+                                    AlertDialog alertDialog = builder.create();
+                                    alertDialog.show();
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            alertDialog.cancel();
+                                        }
+                                    }, 3000 );
                                 }
-                            }, 3000 );
+                            },2000);
+                            return;
                         }
-                    }, 2000 );
+                    }
+                    fb.addCart(cartModel, sharedpreference.getID()).addOnCompleteListener(task1 -> {
+                        if(task1.isSuccessful()){
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mProgressDialog.cancel();
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(InfoFoodActivity.this);
+                                    builder.setTitle("Hoàn tất  !");
+                                    builder.setMessage("Đã thêm món ăn vào giỏ hàng!");
+                                    builder.setNegativeButton("Đóng", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                        // If user click no then dialog box is canceled.
+                                        dialog.cancel();
+                                    });
+                                    AlertDialog alertDialog = builder.create();
+                                    alertDialog.show();
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            alertDialog.cancel();
+                                        }
+                                    }, 3000 );
+                                }
+                            }, 2000 );
+                        }
+                    });
                 }
             });
         });

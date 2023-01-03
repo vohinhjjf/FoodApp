@@ -108,7 +108,7 @@ public class SearchActivity extends AppCompatActivity {
                                 }
                             }
                             rvList.setLayoutManager(new GridLayoutManager(SearchActivity.this, 2));
-                            FoodAdapter food_adapter = new FoodAdapter(list, SearchActivity.this, "ListFoodActivity");
+                            FoodAdapter food_adapter = new FoodAdapter(list, SearchActivity.this, "MainActivity","");
                             rvList.setAdapter(food_adapter);
                             tvNumber.setText(list.size()+" món ăn được tìm thấy");
                             llShowList.setVisibility(View.VISIBLE);

@@ -18,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doandd.InfoFoodActivity;
+import com.example.doandd.MainActivity;
 import com.example.doandd.model.FoodModel;
 import com.example.doandd.R;
 import com.example.doandd.utils.Format;
@@ -25,14 +26,16 @@ import com.example.doandd.utils.ImageLoadTask;
 
 import java.util.List;
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder>{
-    public FoodAdapter(List<FoodModel> list_food,Activity context, String id) {
+    public FoodAdapter(List<FoodModel> list_food,Activity context, String id, String category) {
         this.list_food = list_food;
         this.context = context;
         this.id = id;
+        this.category = category;
     }
     private final List<FoodModel> list_food;
     private final Activity context;
     private final String id;
+    private final String category;
     @NonNull
     @Override
     public FoodViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -69,6 +72,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             intent.putExtra("description", foodModel.getDescription());
             intent.putExtra("image", foodModel.getImage());
             intent.putExtra("rating", (float) foodModel.getRate());
+            intent.putExtra("category", category);
             context.startActivity(intent);
             task.cancel(false);
         });

@@ -96,7 +96,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                                     }
                                 }
                                 rvList.setLayoutManager(new GridLayoutManager(activity, 2));
-                                FoodAdapter food_adapter = new FoodAdapter(list, activity, "MainActivity");
+                                FoodAdapter food_adapter = new FoodAdapter(list, activity, "MainActivity","");
                                 rvList.setAdapter(food_adapter);
                                 tvNumber.setText(list.size()+" món ăn được tìm thấy");
                                 llShowList.setVisibility(View.VISIBLE);

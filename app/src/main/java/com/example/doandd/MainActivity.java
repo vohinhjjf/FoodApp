@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     progressBar.setVisibility(View.INVISIBLE);
                     recyclerView_bestseller_foods.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-                    FoodAdapter food_adapter = new FoodAdapter(list_best_seller_food, MainActivity.this,"MainActivity");
+                    FoodAdapter food_adapter = new FoodAdapter(list_best_seller_food, MainActivity.this,"MainActivity", "");
                     recyclerView_bestseller_foods.setAdapter(food_adapter);
                 }
                 else {
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             progressBar1.setVisibility(View.INVISIBLE);
                             recyclerView_hotfoods.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-                            FoodAdapter food_adapter = new FoodAdapter(list_hot_food, MainActivity.this,"MainActivity");
+                            FoodAdapter food_adapter = new FoodAdapter(list_hot_food, MainActivity.this,"MainActivity", "");
                             recyclerView_hotfoods.setAdapter(food_adapter);
                         }
                         else {

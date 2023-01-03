@@ -100,7 +100,7 @@ public class PaymentActivity extends AppCompatActivity {
         Intent intent = getIntent();
         discount = intent.getDoubleExtra("discount",0.0)*1000;
         maxDiscount = intent.getDoubleExtra("maxDiscount",0.0);
-        total = Double.parseDouble(intent.getStringExtra("total").replaceAll("đ",""))*1000;
+        total = Float.parseFloat(intent.getStringExtra("total").replaceAll("đ","").replaceAll(",","."))*1000;
         listId = intent.getStringArrayListExtra("listID");
         tvtienhang.setText(new Format().currency(total)+"đ");
         if(discount==0){

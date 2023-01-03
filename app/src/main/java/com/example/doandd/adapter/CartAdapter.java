@@ -94,7 +94,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.price.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         holder.discount.setText(new Format().currency(discountPrice) +"đ");
         holder.discountPercent.setText(cartModel.getDiscountPercentage() +"%");
-        holder.rate.setRating(Float.parseFloat(String.valueOf(cartModel.getRate())));
+        holder.rate.setRating((float) cartModel.getRate());
         holder.checkbuy.setChecked(cartModel.getCheckbuy());
         holder.cartView.setOnClickListener(view -> {
             if(!holder.checkbuy.isChecked()){

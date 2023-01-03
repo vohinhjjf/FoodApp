@@ -35,7 +35,7 @@ public class ListFoodActivity extends AppCompatActivity {
         tvTitle = findViewById(R.id.tvTitle);
         tvEmptyList = findViewById(R.id.tvEmptyList);
         btnBackListFood = findViewById(R.id.btnBackListFood);
-        btnCart = findViewById(R.id.btnCart);
+        btnCart = findViewById(R.id.btnCartListFood);
         pbListFood = findViewById(R.id.pbListFood);
         rcvListFood = findViewById(R.id.rcv_listFood);
     }
@@ -50,7 +50,7 @@ public class ListFoodActivity extends AppCompatActivity {
         //
         Intent intent = getIntent();
         tvTitle.setText(intent.getStringExtra("category"));
-        fb.food.whereEqualTo("category", intent.getStringExtra("category")).get()
+        fb.food.whereEqualTo("category", intent.getStringExtra("category")).whereEqualTo("active", true).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -71,7 +71,7 @@ public class ListFoodActivity extends AppCompatActivity {
                             }
                             pbListFood.setVisibility(View.INVISIBLE);
                             rcvListFood.setLayoutManager(new GridLayoutManager(ListFoodActivity.this, 2));
-                            FoodAdapter food_adapter = new FoodAdapter(list_food, ListFoodActivity.this,"ListFoodActivity");
+                            FoodAdapter food_adapter = new FoodAdapter(list_food, ListFoodActivity.this,"ListFoodActivity",intent.getStringExtra("category"));
                             rcvListFood.setAdapter(food_adapter);
                         }
                         else {
@@ -82,6 +82,14 @@ public class ListFoodActivity extends AppCompatActivity {
         //
         btnBackListFood.setOnClickListener(view ->{
             startActivity(new Intent(this, MainActivity.class));
+        });
+        //
+        btnCart.setOnClickListener(view -> {
+            startActivity(new Intent(this, CartActivity.class));
+        });
+        //
+        tvSearch.setOnClickListener(view -> {
+            startActivity(new Intent(this, SearchActivity.class));
         });
     }
 }
